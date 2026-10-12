@@ -52,9 +52,11 @@ def build_router(cfg: Config, db: DB, http: aiohttp.ClientSession) -> Router:
 
     consent_kb = kb([privacy_btn, offer_btn],
                     [B(text="🚀 Продолжить", callback_data="consent")])
-    menu_kb = kb([B(text="🎁 Бесплатный чек-лист", callback_data="checklist")],
-                 [B(text="🚀 О челлендже и цена", callback_data="product")],
-                 [B(text="ℹ️ Контакты, реквизиты, возврат", callback_data="info:menu")])
+    menu_rows = [[B(text="🚀 О челлендже и цена", callback_data="product")],
+                 [B(text="ℹ️ Контакты, реквизиты, возврат", callback_data="info:menu")]]
+    if cfg.show_checklist:  # включается переменной SHOW_CHECKLIST=1, когда будет готов текст чек-листа
+        menu_rows.insert(0, [B(text="🎁 Бесплатный чек-лист", callback_data="checklist")])
+    menu_kb = kb(*menu_rows)
     info_kb = kb([B(text="Контакты", callback_data="info:contacts")],
                  [B(text="Реквизиты", callback_data="info:requisites")],
                  [B(text="Оплата и возврат", callback_data="info:payment")],

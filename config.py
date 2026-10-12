@@ -44,6 +44,7 @@ class Config:
     contact_phone: str
     contact_telegram: str
 
+    show_checklist: bool            # кнопка «Бесплатный чек-лист» (выключена, пока нет текста)
     db_path: str
 
 
@@ -68,5 +69,6 @@ def load_config() -> Config:
         contact_email=_env("CONTACT_EMAIL"),
         contact_phone=_env("CONTACT_PHONE", "", required=False),
         contact_telegram=_env("CONTACT_TELEGRAM", "@ohm_ali", required=False),
+        show_checklist=_env("SHOW_CHECKLIST", "0", required=False) == "1",
         db_path=_env("DB_PATH", "data.sqlite3", required=False),
     )
